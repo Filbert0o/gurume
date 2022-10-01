@@ -1,14 +1,13 @@
-<script></script>
-
 <template>
-  <main>
-    <div></div>
-  </main>
+  <UserCreate />
+  <UserList />
 </template>
 
-<style lang="scss" scoped>
-.heading {
-  font-family: 'Quicksand';
-  font-size: 50px;
-}
-</style>
+<script>
+import UserCreate from '@/components/UserCreate.vue';
+import UserList from '@/components/UserList.vue';
+
+export default {
+  components: { UserCreate, UserList },
+};
+</script>
