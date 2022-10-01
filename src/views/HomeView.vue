@@ -1,9 +1,14 @@
-<script setup>
-import TheWelcome from '../components/TheWelcome.vue'
-</script>
+<script></script>
 
 <template>
   <main>
-    <TheWelcome />
+    <div></div>
   </main>
 </template>
+
+<style lang="scss" scoped>
+.heading {
+  font-family: 'Quicksand';
+  font-size: 50px;
+}
+</style>
