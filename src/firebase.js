@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 import { ref, onUnmounted } from 'vue';
+import store from './store';
 
 const config = {
   apiKey: 'AIzaSyCRGCT3rHYxWxMRmf09htaoxXw-nL73qYI',
@@ -37,6 +38,7 @@ export const useLoadUsers = () => {
   const users = ref([]);
   const close = usersCollection.onSnapshot((snapshot) => {
     users.value = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    store.commit('SET_USERS', users.value);
   });
   onUnmounted(close);
   return users;
