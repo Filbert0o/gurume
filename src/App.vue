@@ -73,7 +73,12 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,700,900');
 
 .navbar-nav {
-  margin-left: 400px;
+  margin-left: 410px;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  position: absolute;
+  left: 3%;
 }
 .header {
   margin-left: 70px;
@@ -92,11 +97,15 @@ export default {
 .search__input {
   width: 30%;
   padding: 12px 24px;
-  margin-left: 535px;
   background-color: transparent;
   transition: transform 250ms ease-in-out;
   font-size: 14px;
   line-height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 35%;
 
   color: #ffffff;
   background-color: transparent;
