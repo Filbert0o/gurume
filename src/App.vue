@@ -27,7 +27,7 @@ export default {
 };
 </script>
 
-        <template>
+<template>
   <div>
     <nav class="navbar navbar-expand-lg self-nav">
       <div class="container-fluid self-container">
@@ -69,7 +69,7 @@ export default {
   </div>
 </template>
 
-        <style scoped>
+<style scoped>
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,700,900');
 
 .navbar-nav {
