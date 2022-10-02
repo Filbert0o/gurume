@@ -25,7 +25,7 @@ export default {
         store.commit('SET_CURRENT_USER', {
           ...user.value,
           achievements: {},
-          roles: ['web-developer'],
+          roles: [],
         });
       }
     });
