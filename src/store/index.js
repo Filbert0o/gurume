@@ -1,36 +1,28 @@
-import { createLogger, createStore } from 'vuex';
-import authModule from './modules/auth.js';
-import popupsModule from './modules/popups.js';
-import currentUserModule from './modules/currentUser.js';
-import ministriesModule from './modules/ministries.js';
-import collegesModule from './modules/colleges';
-import staffsModule from './modules/staffs.js';
-import paginationModule from './modules/pagination.js';
-import toastModule from './modules/toast.js';
-import studentsModule from './modules/students.js';
-import dioceseModule from './modules/diocese.js';
-import newsModule from './modules/news.js';
-import groupsModule from './modules/groups.js';
-import peopleModule from './modules/people.js';
+import { createStore } from 'vuex';
 
-import http from '@/api';
-
-const plugins = process.env.NODE_ENV === 'production' ? [] : [createLogger()];
+import { useLoadUsers, deleteUser } from '@/firebase';
 
 const getInitialState = () => ({
   isDataLoading: false,
+  users: [],
+  currentUser: null,
 });
 
 export default createStore({
-  plugins,
-  strict: true,
   state: getInitialState,
   getters: {
     getIsDataLoading: (state) => state.isDataLoading,
+    getUsers: (state) => state.users,
   },
   mutations: {
     SET_INITIAL_STATE: (state) => {
       Object.assign(state, getInitialState());
+    },
+    SET_USERS: (state, users) => {
+      state.users = users;
+    },
+    SET_CURRENT_USER: (state, currentUser) => {
+      state.currentUser = currentUser;
     },
   },
   actions: {},

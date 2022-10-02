@@ -1,4 +1,31 @@
-        <script></script>
+<script>
+import { useAuth0 } from '@auth0/auth0-vue';
+import { useStore } from 'vuex';
+import { watch } from 'vue';
+
+export default {
+  setup() {
+    const store = useStore();
+    const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
+
+    watch(user, async () => {
+      // debugger;
+      store.commit('SET_CURRENT_USER', user.value);
+    });
+
+    return {
+      login: () => {
+        loginWithRedirect();
+      },
+      logout: () => {
+        logout({ returnTo: window.location.origin });
+      },
+      user,
+      isAuthenticated,
+    };
+  },
+};
+</script>
 
         <template>
   <div>
@@ -23,8 +50,11 @@
             <li class="nav-item">
               <a class="nav-link self-link" href="#">About Us</a>
             </li>
-            <li class="login">
-              <a class="btn nav-link self-link" href="#">LOG IN</a>
+            <li v-if="!isAuthenticated" class="login">
+              <a class="btn nav-link self-link" @click="login">LOG IN</a>
+            </li>
+            <li v-else class="login">
+              <a class="btn nav-link self-link" @click="logout">LOG OUT</a>
             </li>
           </ul>
         </div>
