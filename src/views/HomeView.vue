@@ -1,6 +1,6 @@
 <template>
-  <UserList />
   <div>
+    <!-- <UserList /> -->
     <div class="search__container">
       <p class="search__title">Ask me a Question</p>
       <input
@@ -22,7 +22,7 @@
     <div class="container card-area">
       <template v-for="(helpReq, idx) in helpRequestList" :key="idx">
         <div class="card" v-if="canCurrentUserHelp(helpReq.rolesNeeded)">
-          <div class="card-header">{{ helpReq.name }} Needs Help</div>
+          <div class="card-header">{{ helpReq.userWhoMadeName }} Needs Help</div>
           <div class="card-body">
             <h5 class="card-title">{{ helpReq.question }}</h5>
             <!-- <p class="card-text">
@@ -32,28 +32,6 @@
           </div>
         </div>
       </template>
-
-      <div class="card">
-        <div class="card-header">Filbert Needs Help</div>
-        <div class="card-body">
-          <h5 class="card-title">How to start vue project?</h5>
-          <!-- <p class="card-text">
-        With supporting text below as a natural lead-in to additional content.
-      </p> -->
-          <a @click="connectToChatRoom" class="btn btn-primary">Chat!</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header">Pikachu Needs Help</div>
-        <div class="card-body">
-          <h5 class="card-title">How to create twilio with auth0?</h5>
-          <!-- <p class="card-text">
-        With supporting text below as a natural lead-in to additional content.
-      </p> -->
-          <a @click="connectToChatRoom" class="btn btn-primary">Chat!</a>
-        </div>
-      </div>
     </div>
     <div id="video-container"></div>
     <!-- <VideoChat :chatRoom="chatRoom" v-if="joinChat" /> -->
@@ -70,7 +48,7 @@ import { createHelpRequest, useLoadHelpRequest } from '@/firebase';
 import { useStore } from 'vuex';
 
 export default {
-  components: { UserList },
+  components: {},
   setup() {
     // const { connect } = 'twilio-video';
     const store = useStore();
@@ -82,6 +60,12 @@ export default {
     const helpRequestList = useLoadHelpRequest();
 
     const canCurrentUserHelp = (roles) => {
+      if (!roles) {
+        return false;
+      }
+      if (!currentUser.value?.roles) {
+        return false;
+      }
       for (const role of roles) {
         for (const cuRole of currentUser.value?.roles) {
           if (role === cuRole) return true;

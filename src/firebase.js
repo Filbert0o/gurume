@@ -49,6 +49,7 @@ export const useLoadUsers = () => {
     users.value = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     store.commit('SET_USERS', users.value);
   });
+  console.log('USERSSSSS', users);
   onUnmounted(close);
   return users;
 };

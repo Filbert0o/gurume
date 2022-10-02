@@ -1,25 +1,26 @@
 <script>
 import { useAuth0 } from '@auth0/auth0-vue';
-import { useStore } from 'vuex';
 import { watch, computed } from 'vue';
 import axios from 'axios';
-import { createUser } from '@/firebase';
+import { useLoadUsers, createUser } from '@/firebase';
+import { useStore } from 'vuex';
 
 export default {
   setup() {
     const store = useStore();
+    const usersFB = useLoadUsers();
     const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
 
     const userFromStore = computed(() => store.getters['getUsers']);
 
     watch(user, async () => {
-      if (user.value?.email && !userFromStore.value?.find((x) => x.id === user.value)) {
+      if (user.value?.email && !userFromStore.value?.find((x) => x.email === user.value?.email)) {
         await createUser({ ...user.value, achievements: {}, roles: [] });
       }
-      if (userFromStore.value?.find((x) => x.id === user.value)) {
+      if (userFromStore.value?.find((x) => x.email === user.value?.email)) {
         store.commit(
           'SET_CURRENT_USER',
-          userFromStore.value?.find((x) => x.id === user.value)
+          userFromStore.value?.find((x) => x.email === user.value?.email)
         );
       } else {
         store.commit('SET_CURRENT_USER', {
@@ -40,6 +41,7 @@ export default {
       logout: () => {
         logout({ returnTo: window.location.origin });
       },
+      usersFB,
       user,
       isAuthenticated,
       userFromStore,
@@ -63,9 +65,6 @@ export default {
         <div class="collapse navbar-collapse self-navbar" id="navbarSupportedContent">
           <ul class="col-8 navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link self-link" aria-current="page" href="#">Courses</a>
-            </li>
-            <li class="nav-item">
               <router-link class="nav-link self-link" :to="`/achievements`">
                 <a class="nav-link self-link">Achievements</a>
               </router-link>
@@ -73,9 +72,6 @@ export default {
             </li>
             <li class="nav-item">
               <a class="nav-link self-link" aria-current="page" href="#">Career</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link self-link" href="#">About Us</a>
             </li>
             <li v-if="!isAuthenticated" class="login">
               <a class="btn nav-link self-link" @click="login">LOG IN</a>
