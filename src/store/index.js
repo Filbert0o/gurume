@@ -13,6 +13,7 @@ export default createStore({
   getters: {
     getIsDataLoading: (state) => state.isDataLoading,
     getUsers: (state) => state.users,
+    getCurrentUser: (state) => state.currentUser,
   },
   mutations: {
     SET_INITIAL_STATE: (state) => {

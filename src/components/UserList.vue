@@ -9,7 +9,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="{ id, name, email } in userFromStore" :key="id">
+        <tr v-for="{ id, name, email } in users" :key="id">
           <td>{{ name }}</td>
           <td>{{ email }}</td>
           <td>
