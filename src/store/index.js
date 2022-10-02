@@ -5,6 +5,7 @@ import { useLoadUsers, deleteUser } from '@/firebase';
 const getInitialState = () => ({
   isDataLoading: false,
   users: [],
+  currentUser: null,
 });
 
 export default createStore({
@@ -19,6 +20,9 @@ export default createStore({
     },
     SET_USERS: (state, users) => {
       state.users = users;
+    },
+    SET_CURRENT_USER: (state, currentUser) => {
+      state.currentUser = currentUser;
     },
   },
   actions: {},
